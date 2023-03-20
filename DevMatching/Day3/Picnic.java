@@ -10,7 +10,6 @@ public class Picnic { //Á¾¸¸ºÏ 157p : ¼ÒÇ³
 	private static boolean[][] isFriend;
 
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		int C = Integer.parseInt(br.readLine());
