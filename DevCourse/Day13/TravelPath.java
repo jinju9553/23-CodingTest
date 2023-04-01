@@ -4,29 +4,31 @@ import java.util.*;
 
 public class TravelPath {
 
-	private static final String departure = "ICN";
+private static final String DEPARTURE = "ICN";
+    
     private static boolean[] used;
-    private static LinkedList<LinkedList<String>> allPaths;
+    private static LinkedList<String> allPaths;
     
     public String[] solution(String[][] tickets) {
-        String[] answer = {};
+        String[] answer;
         
         int size = tickets.length;
         
         used = new boolean[size];
-        allPaths = new LinkedList<LinkedList<String>>();
-        LinkedList<String> path = new LinkedList<String>();
-        path.add(departure);
+        allPaths = new LinkedList<>();
         
-        DFS(tickets, departure, size, 0, path);
+        String path = DEPARTURE + ",";
         
-        //Collections.sort(allPaths);
+        DFS(tickets, DEPARTURE, size, 0, path);
+        
+        Collections.sort(allPaths);
+        answer = (allPaths.get(0)).split(",");
         
         return answer;
     }
     
     private static void DFS(String[][] tickets, String start, int N, int depth, 
-                            LinkedList<String> path) { 
+                            String path) { 
         if(N == depth) {
             //완성된 path 하나를 저장
             allPaths.add(path);
@@ -40,11 +42,7 @@ public class TravelPath {
             
             if(!used[i] && currDeparture.equals(start)) {
                 used[i] = true;
-                path.add(currArrival);
-                
-                DFS(tickets, currArrival, N, depth + 1, path);
-                
-                path.removeLast();
+                DFS(tickets, currArrival, N, depth + 1, path + currArrival + ",");
                 used[i] = false;
             }
         }
