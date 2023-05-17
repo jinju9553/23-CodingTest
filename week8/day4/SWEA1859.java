@@ -19,19 +19,16 @@ public class SWEA1859 {
 				cost[i] = sc.nextInt();
 			}
 			
-			int count = 0;
-			int result = 0;
-			for(int i = 0; i < N - 1; i++) {
-				if(cost[i + 1] >= cost[i]) {
-					result -= cost[i];
-					count += 1;
+			int max = cost[N - 1];
+			long result = 0;
+			for(int i = N - 2; i >= 0; i--) {
+				if(cost[i] < max) { //최대 금액보다 i일의 시세(cost[i])가 낮다면
+					result += (max - cost[i]); //i일의 마진을 누적시킨다.
 				}
-				else { //다음날 cost(cost[i + 1])가 오늘(cost[i])보다 작다면
-					result += count * cost[i];
-					count = 0;
+				else { //최대 금액이 발견되었다면 갱신
+					max = cost[i];
 				}
 			}
-			result += count * cost[N - 1];
 			
 			sb.append("#" + test_case + " ").append(result).append('\n');
 		}
