@@ -1,4 +1,4 @@
-package week8.day5;
+package week8.day6;
 
 import java.io.*;
 import java.util.*;
