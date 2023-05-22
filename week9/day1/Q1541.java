@@ -26,16 +26,26 @@ public class Q1541 {
 		}
 		
 		int result = 0;
-		int start = 0;
+		int numIdx = 0;
+		int opeIdx = 0;
+		
 		//식이 양수로 시작하면
 		if(numbers.size() != operators.size()) {
 			result += numbers.get(0);
-			start = 1;
+			numIdx = 1;
 		}
 		
 		//식을 탐색하면서 처리
-		for(int i = start; i < numbers.size(); i++) {
+		int multiplier = 1;
+		while(numIdx < numbers.size() || opeIdx < operators.size()) {			
+			if(operators.get(opeIdx) == '-') {
+				multiplier = -1;
+			}
 			
+			result += (numbers.get(numIdx) * multiplier);
+			
+			numIdx++;
+			opeIdx++;
 		}
 		
 		System.out.print(result);
