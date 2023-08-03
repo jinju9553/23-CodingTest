@@ -23,42 +23,30 @@ public class Main {
 			ingredients[i][1] = Integer.parseInt(temp[1]);
 		}
 
-		DFS(0);
+		DFS(0, 1, 0);
 
 		System.out.println(minDiff);
 	}
 
-	public static void DFS(int depth) {
+	public static void DFS(int depth, int sour, int bitter) {
 		if (depth == N) {
-			int sour = 1;
-			int bitter = 0;
-			
 			if(isAllFalse()) { // 공집합은 만들지 않는다.
 				return;
 			}
-			
-			for (int i = 0; i < N; i++) {
-				int s = ingredients[i][0];
-				int b = ingredients[i][1];
 
-				if (!selected[i]) {
-					continue;
-				}
-
-				sour *= s;
-				bitter += b;
-			}
-			
 			minDiff = Math.min(minDiff, Math.abs(sour - bitter));
 			
 			return;
 		} 
 		
+		int s = ingredients[depth][0];
+		int b = ingredients[depth][1];
+		
 		selected[depth] = true;
-		DFS(depth + 1);
+		DFS(depth + 1, sour * s, bitter + b);
 
 		selected[depth] = false;
-		DFS(depth + 1);
+		DFS(depth + 1, sour, bitter);
 
 		return;
 	}
