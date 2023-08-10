@@ -19,6 +19,7 @@ public class Main {
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 		
 		String[] temp = br.readLine().split(" ");
 		N = Integer.parseInt(temp[0]);
@@ -44,7 +45,9 @@ public class Main {
 		visited = new boolean[K];
 		dfs(0);
 		
-		System.out.println(answer);
+		bw.write(String.valueOf(answer));
+        bw.flush();
+        bw.close();
 	}
 	
 	private static void dfs(int depth) {
