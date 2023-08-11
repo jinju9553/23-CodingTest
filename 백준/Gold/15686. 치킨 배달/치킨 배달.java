@@ -8,7 +8,8 @@ public class Main {
 	private static int R;
 	private static int answer = Integer.MAX_VALUE;
 	
-	private static int[][] map;
+	private static List<Point> houses = new ArrayList<>();
+	private static List<Point> stores = new ArrayList<>();
 	
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,15 +18,16 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		R = Integer.parseInt(st.nextToken());
 		
-		map = new int[N][N];
-
-		ArrayList<Point> stores = new ArrayList<>();
 		for(int i = 0; i < N; i++) {
 			st = new StringTokenizer(br.readLine(), " ");
 			for(int j = 0; j < N; j++) {
-				map[i][j] = Integer.parseInt(st.nextToken());
+				int input = Integer.parseInt(st.nextToken()); 
 				
-				if(map[i][j] == 2) {
+				if(input == 1) {
+					houses.add(new Point(j, i));
+				}
+				
+				if(input == 2) {
 					stores.add(new Point(j, i));
 				}
 			}
@@ -42,42 +44,26 @@ public class Main {
 			for(int i = 0; i < len; i++) {
 				if(p[i] == 0) continue;
 				
-				answer = Math.min(calculateDist(p, stores), answer);
+				answer = Math.min(calculateDist(p), answer);
 			}
 		} while(np(p));
 		
 		System.out.println(answer);
 	}
 
-	private static int calculateDist(int[] p, ArrayList<Point> stores) {
-		
-		int[][] dist = new int[N][N];
-		
-		for(int i = 0; i < map.length; i++) {
-			for(int j = 0; j < map[0].length; j++) {
-				if(map[i][j] != 1) { //집이 아니라면
-					continue;
-				}
-				
-				//집이라면 => 모든 치킨집과의 거리 계산
+	private static int calculateDist(int[] p) {
+		int sum = 0;
+		for(Point house : houses) {
 				int minDist = Integer.MAX_VALUE;
 				for(int k = 0; k < p.length; k++) {
 					if(p[k] == 0) continue;
 					
 					Point store = stores.get(k);
 					
-					int d = Math.abs(i - store.y) + Math.abs(j - store.x);
+					int d = Math.abs(house.y - store.y) + Math.abs(house.x - store.x);
 					minDist = Math.min(d, minDist);
 				}
-				dist[i][j] = minDist;
-			}
-		}
-		
-		int sum = 0;
-		for(int i = 0; i < N; i++) {
-			for(int j = 0; j < N; j++) {
-				sum += dist[i][j];
-			}
+				sum += minDist;
 		}
 		
 		return sum;
