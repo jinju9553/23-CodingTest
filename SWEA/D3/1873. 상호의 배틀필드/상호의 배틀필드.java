@@ -65,41 +65,33 @@ public class Solution {
 					continue;
 				}
 				
-				if(c == UP) {
+				int nr = currR;
+				int nc = currC;
+				if(c == UP) { //다음 이동 방향과 탱크 머리를 결정한다.
 					lastDir = TANK_UP;
-					
-					if(isValid(currR - 1, currC)
-							&& field[currR - 1][currC] == GROUND) {
-						field[currR][currC] = GROUND;
-						currR = currR - 1;
-					}
+					nr = currR - 1;
 				} else if(c == DOWN) {
 					lastDir = TANK_DOWN;
-					
-					if(isValid(currR + 1, currC) 
-							&& field[currR + 1][currC] == GROUND) {
-						field[currR][currC] = GROUND;
-						currR = currR + 1;
-					}
+					nr = currR + 1;
 				} else if(c == LEFT) {
 					lastDir = TANK_LEFT;
-					
-					if(isValid(currR, currC - 1)
-							&& field[currR][currC - 1] == GROUND) {
-						field[currR][currC] = GROUND;
-						currC = currC - 1;
-					}
+					nc = currC - 1;
 				} else if(c == RIGHT) {
 					lastDir = TANK_RIGHT;
-					
-					if(isValid(currR, currC + 1)
-							&& field[currR][currC + 1] == GROUND) {
-						field[currR][currC] = GROUND;
-						currC = currC + 1;
-					}
+					nc = currC + 1;
 				}
 				
+				//탱크의 머리를 돌린다.
 				field[currR][currC] = lastDir;
+				
+				//다음 위치로 이동할 수 있다면 탱크를 이동시킨다.
+				if(isValid(nr, nc)
+						&& field[nr][nc] == GROUND) {
+					field[currR][currC] = GROUND;
+					field[nr][nc] = lastDir;
+					currR = nr;
+					currC = nc;
+				}
 			}
 			
 			sb.append("#").append(test_case).append(" ");
